@@ -68,7 +68,7 @@ def serie(n):
     if n == 1:
         return 1
     else:
-        return serie(n-1) + 1/n
+        return 1/n + serie(n-1)
     
 # Ejercicio 8:
 def binario(n):
