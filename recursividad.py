@@ -1,5 +1,6 @@
 # Alumno: Cabrera Emanuel
 import sys
+from random import shuffle
 
 # Algoritmos
 def factorial(n):
@@ -82,9 +83,46 @@ def logaritmo(n, b):
         return 0
     return logaritmo(n // b, b) + 1
 
+# Ejercicio 22:
+mochila_jedi = [
+    "Sable de luz",
+    "Kit de herramientas para el sable",
+    "Raciones de comida compacta",
+    "Cantimplora",
+    "Mapa estelar portatil",
+    "Holocomunicador",
+    "Proyector holografico",
+    "Datapad",
+    "Droid asistente",
+    "Dispositivo de rastreo",
+    "Cristal kyber de repuesto",
+    "Tunica adicional",
+    "Amuleto del maestro",
+    "Holocron o textos antiguos",
+    "Diario personal",
+    "Kit medico básico",
+    "Bacta",
+    "Multiherramienta",
+    "Linterna",
+    "Dispositivo de camuflaje",
+    "Traductor universal",
+    "Credenciales Jedi",
+    "Creditos galacticos"
+    ]
+shuffle(mochila_jedi)
+def usar_la_fuerza(n=0, mochila = mochila_jedi):
+    if mochila[n] == "Sable de luz":
+        return f"Sable de luz encontrado en la iteracion {n+1}"
+    if n > len(mochila):
+        return f"El maestro se olvido el sable en la nave"
+    else:
+        return usar_la_fuerza(n + 1)
+        
 # Ejecucion
 if __name__ == "__main__":
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 2:
+        func = sys.argv[1]
+    elif len(sys.argv) == 3:
         func = sys.argv[1]
         a = sys.argv[2]
     elif len(sys.argv) == 4:
@@ -115,3 +153,5 @@ if __name__ == "__main__":
             print(binario(int(a)))
         case "logaritmo":
             print(logaritmo(int(a), int(b)))
+        case "usar_la_fuerza":
+            print(usar_la_fuerza())
