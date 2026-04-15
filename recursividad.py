@@ -83,6 +83,13 @@ def logaritmo(n, b):
         return 0
     return logaritmo(n // b, b) + 1
 
+# Ejercicio 10:
+def digitos(n):
+    if n // 10 < 1:
+        return 1
+    else:
+        return 1 + digitos(n // 10)
+
 # Ejercicio 22:
 mochila_jedi = [
     "Sable de luz",
@@ -113,7 +120,7 @@ shuffle(mochila_jedi)
 def usar_la_fuerza(n=0, mochila = mochila_jedi):
     if mochila[n] == "Sable de luz":
         return f"Sable de luz encontrado en la iteracion {n+1}"
-    if n > len(mochila):
+    if n >= len(mochila):
         return f"El maestro se olvido el sable en la nave"
     else:
         return usar_la_fuerza(n + 1)
@@ -153,5 +160,7 @@ if __name__ == "__main__":
             print(binario(int(a)))
         case "logaritmo":
             print(logaritmo(int(a), int(b)))
+        case "digitos":
+            print(digitos(int(a)))
         case "usar_la_fuerza":
             print(usar_la_fuerza())
