@@ -110,70 +110,96 @@ def dar_vuelta(cadena):
     return "".join([pila.desapilar() for letra in cadena])
 
 # #Ejercicio8 (a terminar)
-# class Baraja:
-#     def __init__(self):
-#         self._naipes = []
-        
-#     def __str__(self):
-#         return f"Una baraja con {self.size()} naipes."
-        
-#     def apilar(self, naipe):
-# 	    if naipe not in self._naipes:
-#         	self._items.append(naipe)
-#         if naipe._palo == "comodin" and self._naipes.count(naipe) < 2:
-#             self._items.append(naipe)
-        
-#     def size(self):
-#         return len(self._naipes)
-        
-#     def is_empty(self):
-#         return (self.size() == 0)
-        
-#     def desapilar(self):
-#         if not self.is_empty():
-#             return self._items.pop()
-#         else:
-#             raise IndexError("Baraja vacia.")
+class Naipe:
+    PALOS = ("basto", "espada", "oro", "copa")
     
-#     def peek(self):
-#         value = self.unstack()
-#         self.stack(value)
-#         return value
-
-# class Naipe:
-#     PALOS = ("basto", "espada", "oro", "copa")
-#     def __init__(self):
-#         if random() < 0.04:  # 4% de probabilidad
-#             self._palo = "comodin"
-#             self._valor = None
-#         else:
-#             self._palo = choice(Naipe.PALOS)
-#             self._valor = randint(1, 12)
+    def __init__(self):
+            self._palo = choice(Naipe.PALOS)
+            self._valor = randint(1, 12)
         
-#     def __str__(self):
-#         if self._palo == "comodin":
-#             return "Comodin!!"
-#         return f"{self._valor} de {self._palo}"
-		
-#     def __eq__(self, other):
-#         return ((self._palo == other._palo) and (self._valor == other._valor))
-		
-# naipe1 = Naipe()
-# naipe2 = Naipe()
-# naipe3 = Naipe()
-# naipe4 = Naipe()
-# print(naipe1)
+    def __str__(self):
+        return f"{self.valor} de {self.palo}"
+        
+    def __eq__(self, other: Naipe):
+        return ((self.palo == other.palo) and (self.valor == other.valor))
+    
+    @property
+    def palo(self):
+        return self._palo
+    
+    @property
+    def valor(self):
+        return self._valor
+
+class Baraja:
+    def __init__(self, nro_cartas: int = 48):
+        self._naipes = []
+        if not nro_cartas == 0: 
+            while self.size() < nro_cartas:
+                naipe = Naipe()
+                self.apilar(naipe)
+
+    def __str__(self):
+        return f"Una baraja con {self.size()} naipes."
+        
+    def apilar(self, naipe):
+        if naipe not in self._naipes:
+            self._naipes.append(naipe)
+        
+    def size(self):
+        return len(self._naipes)
+        
+    def esta_vacia(self):
+        return (self.size() == 0)
+        
+    def desapilar(self):
+        if not self.esta_vacia():
+            return self._naipes.pop()
+        else:
+            raise IndexError("Baraja vacia.")
+        
+    def cima(self):
+        return self._naipes[-1]
+        
+    def separar_por_palo(self):
+        espadas, bastos, copas, oros = Baraja(nro_cartas=0), Baraja(nro_cartas=0), Baraja(nro_cartas=0), Baraja(nro_cartas=0)
+        for i in range(self.size()):
+            carta = self.desapilar()
+            match carta.palo:
+                case "espada":
+                    espadas.apilar(carta)
+                case "basto":
+                    bastos.apilar(carta)
+                case "oro":
+                    oros.apilar(carta)
+                case "copa":
+                    copas.apilar(carta)
+        return {
+            "espada": espadas,
+            "basto": bastos,
+            "copa": copas,
+            "oro": oros
+        }
+    
+    def ordenar(self):
+        pila_aux = Baraja(nro_cartas=0)
+        while not self.esta_vacia():
+            en_mano = self.desapilar()
+            pila_aux.apilar(en_mano)
+        while not pila_aux.esta_vacia():
+            temp = pila_aux.desapilar()
+            while not self.esta_vacia() and self.cima().valor < temp.valor:
+                tmp = self.desapilar()
+                pila_aux.apilar(tmp)
+            self.apilar(temp)
 
 # Ejecucion
 if __name__ == "__main__":
     # Generacion de instancias
-    pila1 = Pila()
-    
-    # Carga de valores
-    for i in range(10):
-        pila1.apilar(randint(1,10))
+    baraja1 = Baraja()
     
     # Funcion/es a probar
-    pila1.mostrar()
-    pila1.invertir()
-    pila1.mostrar()
+    pilas = baraja1.separar_por_palo()
+    for _ in range(pilas["espada"].size()):
+        print(pilas["espada"].desapilar())
+    
