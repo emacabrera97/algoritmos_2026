@@ -1,4 +1,7 @@
 # Alumno: Cabrera Emanuel
+# Para probar el codigo se hace a traves de command-line arguments, en el caso
+# del ejercicio cinco seria python recursividad.py romanos (string a testear)
+# en caso del ejercicio 22 python recursividad.py usar_la_fuerza
 import sys
 from random import shuffle
 
@@ -91,7 +94,7 @@ def digitos(n):
         return 1 + digitos(n // 10)
 
 # Ejercicio 22:
-mochila_jedi = [
+items_jedi = [
     "Sable de luz",
     "Kit de herramientas para el sable",
     "Raciones de comida compacta",
@@ -116,7 +119,8 @@ mochila_jedi = [
     "Credenciales Jedi",
     "Creditos galacticos"
     ]
-shuffle(mochila_jedi)
+shuffle(items_jedi) # Para que no esten siempre en el mismo orden...
+mochila_jedi = items_jedi[:-2] # Dejamos lugar a una minima posibilidad que el sable no este, para variar.
 def usar_la_fuerza(n=0, mochila = mochila_jedi):
     if mochila[n] == "Sable de luz":
         return f"Sable de luz encontrado en la iteracion {n+1}"

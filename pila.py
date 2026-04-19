@@ -1,7 +1,7 @@
-from random import choice, randint, random
+from random import choice, randint
 # La pila es una sucesion elementos "apilados", posee dos funcionalidades 
-# basicas: apilar un nuevo elemento, desapilar un elemento. El ultimo
-# en entrar es el primero en salir, como una pila de platos por ejemplo.
+# basicas: apilar un nuevo elemento, desapilar un elemento. 
+# El ultimo en entrar es el primero en salir.
 
 class Pila:
     def __init__(self):
@@ -163,7 +163,7 @@ class Baraja:
         
     def separar_por_palo(self):
         espadas, bastos, copas, oros = Baraja(nro_cartas=0), Baraja(nro_cartas=0), Baraja(nro_cartas=0), Baraja(nro_cartas=0)
-        for i in range(self.size()):
+        for _ in range(self.size()):
             carta = self.desapilar()
             match carta.palo:
                 case "espada":
