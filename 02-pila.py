@@ -185,30 +185,35 @@ class Baraja(Stack):
 
 
 #Ejercicio 20    
-movimientos = Stack()
 def input_trayectoria(movimientos):
     while True:
-        entrada = input("Ingrese un movimiento: ")
+        entrada = input("Ingrese un movimiento (direccion pasos): ")
         if not entrada:
             break
-        else:
-            direccion, pasos = entrada.split(" ")
-            movimientos.push((direccion, pasos))
+        direccion, distancia = entrada.split(" ")
+        if direccion not in ("norte", "sur", "este", "oeste", "noreste", "noroeste", "sureste", "suroeste"):
+            print("ERROR: Dirección inválida")
+            continue                         
+        if not distancia.isnumeric():
+            print("ERROR: La distancia debe ser un número entero")
+            continue                         
+        movimientos.push((direccion, distancia))  
 
 def volver_al_comienzo(movimientos):
+    opuestos = {
+        "norte": "sur",
+        "sur": "norte",
+        "este": "oeste",
+        "oeste": "este",
+        "noreste": "suroeste",
+        "suroeste": "noreste",
+        "noroeste": "sureste",
+        "sureste": "noroeste",
+    }
     while movimientos.size() > 0:
-        movimiento = movimientos.pop()
-        direccion, pasos = movimiento
-        if direccion == "norte":
-            direccion = "sur"
-        elif direccion == "sur":
-            direccion = "norte"
-        elif direccion == "oeste":
-            direccion = "este"
-        elif direccion == "este":
-            direccion = "oeste"
-        movimiento_opuesto = (direccion, pasos)
-        print(movimiento_opuesto)
+        direccion, pasos = movimientos.pop()
+        print((opuestos[direccion], pasos))
+
 
 #Ejercicio 24
 class Heroes(Stack):
@@ -242,7 +247,7 @@ class Heroes(Stack):
                 results.append((character, movies))
         return results
 
-    def those_whose_name_starts_with(self, letter):
+    def whose_name_starts_with(self, letter):
         """
         Aquellos personajes cuyos nombres empiezan con...
         """
@@ -254,4 +259,64 @@ class Heroes(Stack):
 
 # Ejecucion
 if __name__ == "__main__":
-    
+    opc = "1"
+    #Testeo ejercicio 20
+    while opc == "1":
+        print("Testeando ejercicio 20")
+        trayectoria = Stack()
+        print("Ingrese los movimientos con el formato: direccion:str distancia:int")
+        print("No ingrese nada para terminar la carga")
+        input_trayectoria(trayectoria)
+        print("=== Trayectoria cargada (fondo → cima) ===")
+        trayectoria.show()
+        print("\n=== Secuencia para volver al origen ===")
+        volver_al_comienzo(trayectoria)
+        opc = input("Ingrese 1 para volver a testear, cualquier otro valor para continuar...")
+    print()
+    print()
+    print()
+    #Testeo ejercicio 24
+    opc = "1"
+    while opc == "1":
+        print("Testeando ejercicio 24")
+        heroes = Heroes()
+        mcu = [
+        ("Iron Man", 10),
+        ("Captain America", 7),
+        ("Thor", 8),
+        ("Black Widow", 7),
+        ("Hulk", 6),
+        ("Rocket Raccoon", 5),  
+        ("Hawkeye", 5),
+        ("Spider-Man", 6),
+        ("Doctor Strange", 4),
+        ("Black Panther", 3),
+        ("Wanda", 5),
+        ("Vision", 3),
+        ("Ant-Man", 3),
+        ("Star-Lord", 4),
+        ("Groot", 4),           
+        ("Gamora", 3),
+        ("Nebula", 4),
+        ("War Machine", 5),
+        ("Falcon", 4),
+        ("Bucky", 4),
+        ("Nick Fury", 8),
+        ("Wong", 4),
+        ]
+        for personaje in mcu:
+            heroes.push(personaje)
+        #Posicion de Rocket y Groot
+        print("=== Buscando a Rocket y Groot ===")
+        print(heroes.look_for_character("Rocket Raccoon", "Groot"))
+        #Personajes que aparecen en mas de 5 peliculas
+        print("\n=== Heroes en mas de 5 pelis ===")
+        print(heroes.more_than_5_movies())
+        #Personajes cuyos nombres empiezan con...
+        print("\n=== Heroes cuyo nombre empieza con 'C' ===")
+        print(heroes.whose_name_starts_with("C"))
+        print("\n=== Heroes cuyo nombre empieza con 'D' ===")
+        print(heroes.whose_name_starts_with("D"))
+        print("\n=== Heroes cuyo nombre empieza con 'G' ===")
+        print(heroes.whose_name_starts_with("G"))
+        opc = input("Ingrese 1 para volver a testear, cualquier otro valor para terminar...")
