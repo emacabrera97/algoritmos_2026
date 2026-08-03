@@ -8,7 +8,7 @@ Las operaciones principales son enqueue (encolar), dequeue (desencolar) y peek (
 
 from typing import Any
 from datetime import time
-from bpila import Stack
+from pila import Stack
 
 class Queue:
     def __init__(self):
