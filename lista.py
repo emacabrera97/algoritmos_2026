@@ -1,7 +1,7 @@
 from typing import Any, Optional
 
 class List(list):
-
+    
     __CRITERION_FUNCTION = {}
     
     def add_criterion(self, criterion_key: str, criterion_function) -> None:
