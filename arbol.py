@@ -149,10 +149,10 @@ class Persona:
 arbol = BinaryTree()
 arbol_ape = BinaryTree()
 
-p1 = Persona('Pepito', 'Gonzalez', 23)
-p2 = Persona('Pepito', 'Perez', 24)
-p3 = Persona('Pepito', 'Garcia', 25)
-p4 = Persona('Pepito', 'Casanova', 26)
+p1 = Persona('Pepito', 'Gonzalez', 23432567)
+p2 = Persona('Pepito', 'Perez', 24123654)
+p3 = Persona('Pepito', 'Garcia', 25423567)
+p4 = Persona('Pepito', 'Casanova', 26987567)
 
 arbol.insert_node(p1.dni, p1)
 arbol.insert_node(p2.dni, p2)
